@@ -1,6 +1,10 @@
 <form class="card" [formGroup]="form" (ngSubmit)="submitForm()">
   <h2>Увійти в панель Адміністратора</h2>
 
+  <div class="alert alert-danger" *ngIf="auth.error$ | async as errorMessage">
+    {{ errorMessage }}
+  </div>
+
   <div
     class="form-control"
     [class.invalid]="form.get('email').touched && form.get('email').invalid">
