@@ -1,1 +1,40 @@
-<p>login-page works!</p>
+<form class="card" [formGroup]="form" (ngSubmit)="submitForm()">
+  <h2>Увійти в панель Адміністратора</h2>
+
+  <div
+    class="form-control"
+    [class.invalid]="form.get('email').touched && form.get('email').invalid">
+    <label for="email">Email</label>
+    <input id="email" type="email" formControlName="email">
+    <div class="validation" *ngIf="form.get('email').touched && form.get('email').invalid">
+      <small *ngIf="form.get('email').errors.required">
+        Поле Email обов'язкове
+      </small>
+      <small *ngIf="form.get('email').errors.email">
+        Введіть валідний Email
+      </small>
+    </div>
+  </div>
+
+  <div
+    class="form-control"
+    [class.invalid]="form.get('password').touched && form.get('password').invalid">
+    <label for="email">Password</label>
+    <input id="password" type="password" formControlName="password">
+    <div class="validation" *ngIf="form.get('password').touched && form.get('password').invalid">
+      <small *ngIf="form.get('password').errors.required">
+        Поле Password обов'язкове
+      </small>
+      <small *ngIf="form.get('password').errors.minlength">
+        Поле Password має містити не менше {{ form.get('password').errors.minlength.requiredLength }} символів.
+        Зараз введено {{ form.get('password').errors.minlength.actualLength }} символи
+      </small>
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-primary"
+    [disabled]="form.invalid">Увійти</button>
+
+</form>
