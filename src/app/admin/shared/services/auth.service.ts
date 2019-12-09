@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { FirebaseAuthResponse, UserInterface } from '../interfaces';
+import { FirebaseAuthResponse, UserInterface } from '../../../shared/interfaces';
 import { environment } from '../../../../environments/environment';
 
 
