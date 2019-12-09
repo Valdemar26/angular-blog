@@ -7,7 +7,7 @@ import { FirebaseAuthResponse, UserInterface } from '../../../shared/interfaces'
 import { environment } from '../../../../environments/environment';
 
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AuthService {
 
   public error$: Subject<string> = new Subject<string>();
