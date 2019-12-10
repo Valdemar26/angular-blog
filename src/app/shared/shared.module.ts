@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-
 import { QuillModule } from 'ngx-quill';
 
 @NgModule({
@@ -13,7 +12,6 @@ import { QuillModule } from 'ngx-quill';
     QuillModule
   ]
 })
-
 export class SharedModule {
 
 }
