@@ -12,6 +12,8 @@ import { Post } from '../../shared/interfaces';
 export class DashboardPageComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
   postsSubscription: Subscription;
+  deleteSubscription: Subscription;
+  searchString = '';
 
   constructor(private postsService: PostsService) { }
 
@@ -25,10 +27,17 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     if (this.postsSubscription) {
       this.postsSubscription.unsubscribe();
     }
+    if (this.deleteSubscription) {
+      this.deleteSubscription.unsubscribe();
+    }
   }
 
   remove(id: string) {
-
+    this.deleteSubscription = this.postsService.removePost(id).subscribe(() => {
+      this.posts = this.posts.filter( (post) => {
+        return post.id !== id;
+      });
+    });
   }
 
 }
