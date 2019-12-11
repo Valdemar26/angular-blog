@@ -3,6 +3,7 @@ import { NgModule, Provider } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import uaLocale from '@angular/common/locales/ru-UA';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +14,7 @@ import { PostComponent } from './shared/components/post/post.component';
 import { AuthInterceptor } from './shared/auth.interceptor';
 import { SharedModule } from './shared/shared.module';
 import { AlertService } from './admin/shared/services/alert.service';
+import { environment } from '../environments/environment';
 
 registerLocaleData(uaLocale, 'ua');
 
@@ -33,7 +35,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [INTERCEPTOR_PROVIDER, AlertService],
   bootstrap: [AppComponent]

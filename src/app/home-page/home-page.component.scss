@@ -2,3 +2,12 @@
   max-width: 600px;
   margin: 0 auto;
 }
+
+.loading-wrapper {
+  display: flex;
+  margin: 0 auto;
+  .loading {
+    max-width: 200px;
+    height: auto;
+  }
+}

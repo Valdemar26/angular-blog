@@ -1,18 +1,26 @@
-<div class="post">
-  <div class="header">
-    <h1>Post title</h1>
+<div class="post-wrapper" *ngIf="post$ | async as post; else loading">
+  <div class="post">
+    <div class="header">
+      <h1>{{ post.title }}</h1>
 
-    <button routerLink="/" class="btn btn-link">На головну</button>
-  </div>
+      <button routerLink="/" class="btn btn-link">На головну</button>
+    </div>
 
-  <div class="info">
-    <strong>Тут автор</strong>
-    <small>12.09.2019</small>
-  </div>
+    <div class="info">
+      <strong>{{ post.author }}</strong>
+      <small>{{ post.date | date:'medium':null:'ua'}}</small>
+    </div>
 
-  <div>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam eum labore maiores! Aliquid aspernatur at aut commodi dolores eos ex excepturi facilis inventore laboriosam modi odio officia, perspiciatis sapiente voluptatibus? A in libero maiores quaerat quod repellendus tenetur, vero! Ab debitis ipsa iste iure libero maiores praesentium repellat, sed soluta?
-    </p>
+    <div>
+      <quill-view-html [content]="post.text"></quill-view-html>
+    </div>
   </div>
 </div>
+
+<ng-template #loading>
+  <div class="loading-wrapper">
+
+  </div>
+  <p class="text-center">Завантажую пост...</p>
+  <img class="loading" src="../../assets/loading.gif" alt="loading">
+</ng-template>
