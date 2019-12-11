@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { PostsService } from '../../shared/posts.service';
 import { Post } from '../../shared/interfaces';
+import { AlertService } from '../shared/services/alert.service';
 
 @Component({
   selector: 'app-edit-page',
@@ -18,7 +19,11 @@ export class EditPageComponent implements OnInit, OnDestroy {
   submitted = false;
   updateSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private postsService: PostsService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private postsService: PostsService,
+    private alert: AlertService
+  ) { }
 
   ngOnInit() {
     this.route.params.pipe(
@@ -53,6 +58,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
       title: this.form.value.title
     }).subscribe(() => {
       this.submitted = false;
+      this.alert.warning('Пост було оновлено!');
     });
   }
 

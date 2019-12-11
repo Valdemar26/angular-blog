@@ -22,12 +22,12 @@ export class AlertComponent implements OnInit, OnDestroy {
     this.alertSubscription = this.alertService.alert$.subscribe( alert => {
       this.text = alert.text;
       this.type = alert.type;
-    });
 
-    const timeout = setTimeout(() => {
-      clearTimeout(timeout);
-      this.text = '';
-    }, this.delay);
+      const timeout = setTimeout(() => {
+        clearTimeout(timeout);
+        this.text = '';
+      }, this.delay);
+    });
   }
 
   ngOnDestroy() {
