@@ -2,6 +2,7 @@
   background: #333;
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
 .typewriter h1 {
@@ -17,6 +18,21 @@
     blink-caret .5s step-end infinite;
 }
 
+.typewriter h5 {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #fff;
+  font-weight: 100;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
 /* The typing effect */
 @keyframes typing {
   from { width: 0 }
@@ -27,4 +43,15 @@
 @keyframes blink-caret {
   from, to { border-color: transparent }
   50% { border-color: orange }
+}
+
+
+@media screen and (max-width: 768px) {
+  .main {
+    .typewriter {
+      h1 {
+        font-size: 1rem;
+      }
+    }
+  }
 }
