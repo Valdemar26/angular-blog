@@ -6,6 +6,12 @@
     <p>Current time: {{ time$  | async | date:'HH:mm:ss' }}</p>
   </div>
 
+  <div class="search-wrapper">
+    <input type="text" name="search" id="search" (input)="onSearchChange($event.target.value)"/>
+
+    <ul id="results"></ul>
+  </div>
+
   <app-post
     *ngFor="let post of posts"
     [post]="post">
