@@ -1,6 +1,12 @@
 .posts {
   max-width: 600px;
   margin: 0 auto;
+
+  .clock-wrapper {
+    width: 100%;
+    min-height: 20px;
+    margin: 0 auto;
+  }
 }
 
 .loading-wrapper {

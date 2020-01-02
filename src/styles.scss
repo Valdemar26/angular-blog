@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 @import "~quill/dist/quill.core.css";
 @import "~quill/dist/quill.snow.css";
+@import "assets/scss/mixins/mixin-scroll";
 
 :root {
   --primary-color: #dc3545;
@@ -14,6 +15,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  @include scroll();
 }
 
 body {
@@ -22,6 +24,7 @@ body {
   line-height: 1.6;
   background-color: #fff;
   color: #333;
+
 }
 
 a {
