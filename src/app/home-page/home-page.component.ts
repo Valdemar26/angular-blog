@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { fromEvent, Observable } from 'rxjs';
 
 import { PostsService } from '../shared/posts.service';
@@ -10,17 +10,24 @@ import {debounceTime, filter, map, tap} from 'rxjs/operators';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, AfterViewInit {
 
-  posts$: Observable<Post[]>;
+  posts$: Observable<any>;
   public time$: Observable<Date>;
   search$: Observable<any>;
+
+  @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
 
   constructor(private postsService: PostsService) { }
 
   ngOnInit() {
-    this.posts$ = this.postsService.getAllPosts();
     this.getCurrentTime();
+    this.posts$ = this.postsService.getAllPosts();
+  }
+
+  ngAfterViewInit() {
+    // this.onSearchChange().subscribe();
+    console.log(this.searchInput.nativeElement);
   }
 
   getCurrentTime() {
@@ -31,18 +38,12 @@ export class HomePageComponent implements OnInit {
     });
   }
 
-  onSearchChange(searchValue: any): void {
-    // console.log(searchValue,
-    //   this.postsService.getAllPosts()
-    //     .subscribe(data => {
-    //       console.log('DATA: ', data);
-    //       filter( a => console.log(a.title));
-    //     }));
-
-    this.search$ = fromEvent(searchValue, 'input').pipe(
-      // debounceTime(700),
-      map(e => console.log('search: ', this.postsService.getAllPosts()))
-    );
-  }
+  // onSearchChange(value) {
+  // behavior subject
+  // this.someBeh.next(value)
+  //   return fromEvent( this.searchInput.nativeElement, "input" ).pipe(
+  //     tap((value) => console.log(value))
+  //   );
+  // }
 
 }
