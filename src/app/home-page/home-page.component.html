@@ -8,7 +8,7 @@
 
   <div class="search-wrapper">
     <input #searchInput type="text" name="search" id="search"
-     (input)="onSearchChange($event.target.value)"/>
+     (input)="onSearchChange(searchInput)"/>
 
     <ul id="results"></ul>
   </div>

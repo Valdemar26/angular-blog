@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { fromEvent, Observable, of } from 'rxjs';
 
 import { PostsService } from '../shared/posts.service';
 import { Post } from '../shared/interfaces';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
+import {empty} from 'rxjs/internal/Observer';
 
 @Component({
   selector: 'app-home-page',
@@ -18,10 +19,14 @@ export class HomePageComponent implements OnInit, AfterViewInit {
 
   @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
 
-  constructor(private postsService: PostsService) { }
+  constructor(
+    private postsService: PostsService,
+    // private cd: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
     this.getCurrentTime();
+    // this.cd.detectChanges();
     this.posts$ = this.postsService.getAllPosts();
   }
 
@@ -46,18 +51,14 @@ export class HomePageComponent implements OnInit, AfterViewInit {
   //     tap((value) => console.log(value))
   //   );
 
-    fromEvent(document.querySelector('#search'), 'keyup')
+    fromEvent(value, 'input')
       .pipe(
-        map(e => (e.target as HTMLTextAreaElement).value),
+        map((res: any) => res.target.value),
         debounceTime(1000),
         distinctUntilChanged(),
-        switchMap(val =>
-          of(val).pipe(
-            tap(v => {
-              console.log(v);
-            }
-            )
-          )
+        switchMap(val => {
+          return this.postsService.getSearchPost(val);
+         }
         )
       ).subscribe(data => console.log('DATA: ', data));
 
