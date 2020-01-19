@@ -3,7 +3,7 @@ import { fromEvent, Observable } from 'rxjs';
 
 import { PostsService } from '../shared/posts.service';
 import { Post } from '../shared/interfaces';
-import {debounceTime, filter, map, tap} from 'rxjs/operators';
+import { debounceTime, filter, first, map, skip, skipWhile, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home-page',
@@ -39,10 +39,29 @@ export class HomePageComponent implements OnInit {
     //       filter( a => console.log(a.title));
     //     }));
 
-    this.search$ = fromEvent(searchValue, 'input').pipe(
-      // debounceTime(700),
-      map(e => console.log('search: ', this.postsService.getAllPosts()))
-    );
+    // this.search$ = fromEvent(searchValue, 'input').pipe(
+    //   // debounceTime(700),
+    //   map(e => console.log('search: ', this.postsService.getAllPosts()))
+    // );
+
+    this.postsService.getAllPosts().pipe(
+      debounceTime(500),
+      // first(),
+      // skipWhile( data => !data),
+      // tap(data => console.log('TAP: ', data)),
+      // filter(text => text.title === searchValue),
+      // tap( data => console.log('FIRST DATA: ', data))
+    )
+      .subscribe( data => {
+        map(t => t.title);
+        console.log(data, searchValue, data.filter(text => text.title === searchValue));
+        // pipe(
+        //   skipWhile( text => !text),
+        //   tap(text => console.log('TAP: ', text)),
+        //   filter(text => text.title === searchValue),
+        //   tap(text => console.log('TAP1: ', text)),
+        // );
+    });
   }
 
 }
