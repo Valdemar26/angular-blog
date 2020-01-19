@@ -1,26 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { fromEvent, Observable } from 'rxjs';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { fromEvent, Observable, of } from 'rxjs';
 
 import { PostsService } from '../shared/posts.service';
 import { Post } from '../shared/interfaces';
-import { debounceTime, filter, first, map, skip, skipWhile, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
+import {empty} from 'rxjs/internal/Observer';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, AfterViewInit {
 
-  posts$: Observable<Post[]>;
+  posts$: Observable<any>;
   public time$: Observable<Date>;
   search$: Observable<any>;
 
-  constructor(private postsService: PostsService) { }
+  @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
+
+  constructor(
+    private postsService: PostsService,
+    // private cd: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
-    this.posts$ = this.postsService.getAllPosts();
     this.getCurrentTime();
+    // this.cd.detectChanges();
+    this.posts$ = this.postsService.getAllPosts();
+  }
+
+  ngAfterViewInit() {
+    // this.onSearchChange().subscribe();
+    // console.log(this.searchInput.nativeElement);
   }
 
   getCurrentTime() {
@@ -31,37 +43,25 @@ export class HomePageComponent implements OnInit {
     });
   }
 
-  onSearchChange(searchValue: any): void {
-    // console.log(searchValue,
-    //   this.postsService.getAllPosts()
-    //     .subscribe(data => {
-    //       console.log('DATA: ', data);
-    //       filter( a => console.log(a.title));
-    //     }));
+  onSearchChange(value) {
+    console.log(value);
+  // behavior subject
+  // this.someBeh.next(value)
+  //   return fromEvent( this.searchInput.nativeElement, "input" ).pipe(
+  //     tap((value) => console.log(value))
+  //   );
 
-    // this.search$ = fromEvent(searchValue, 'input').pipe(
-    //   // debounceTime(700),
-    //   map(e => console.log('search: ', this.postsService.getAllPosts()))
-    // );
+    fromEvent(value, 'input')
+      .pipe(
+        map((res: any) => res.target.value),
+        debounceTime(1000),
+        distinctUntilChanged(),
+        switchMap(val => {
+          return this.postsService.getSearchPost(val);
+         }
+        )
+      ).subscribe(data => console.log('DATA: ', data));
 
-    this.postsService.getAllPosts().pipe(
-      debounceTime(500),
-      // first(),
-      // skipWhile( data => !data),
-      // tap(data => console.log('TAP: ', data)),
-      // filter(text => text.title === searchValue),
-      // tap( data => console.log('FIRST DATA: ', data))
-    )
-      .subscribe( data => {
-        map(t => t.title);
-        console.log(data, searchValue, data.filter(text => text.title === searchValue));
-        // pipe(
-        //   skipWhile( text => !text),
-        //   tap(text => console.log('TAP: ', text)),
-        //   filter(text => text.title === searchValue),
-        //   tap(text => console.log('TAP1: ', text)),
-        // );
-    });
   }
 
 }

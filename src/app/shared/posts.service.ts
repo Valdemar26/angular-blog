@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {from, Observable} from 'rxjs';
+import {filter, map, switchMap, tap} from 'rxjs/operators';
 
 import { FbCreateResponse, Post } from './interfaces';
 import { environment } from '../../environments/environment';
@@ -24,7 +24,8 @@ export class PostsService {
 
   getAllPosts(): Observable<Post[]> {
     return this.http.get(`${environment.fbDbUrl}/posts.json`)
-      .pipe(map( (response: {[key: string]: any}) => {
+      .pipe(
+        map( (response: {[key: string]: any}) => {
         return Object
           .keys(response)
           .map( key => ({
@@ -34,6 +35,19 @@ export class PostsService {
           }));
       }));
   }
+
+  getSearchPost(input) {
+    return this.getAllPosts().pipe(
+      switchMap((value) => {
+        return from(value);
+      }),
+      filter((i) => {
+        console.log(i);
+        return i['title'].includes(input);
+      })
+    );
+  }
+
 
   getPostById(id: string): Observable<Post> {
     return this.http.get<Post>(`${environment.fbDbUrl}/posts/${id}.json`)
