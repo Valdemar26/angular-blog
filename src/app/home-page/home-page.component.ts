@@ -1,10 +1,12 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+
 import { fromEvent, Observable, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
+import { empty } from 'rxjs/internal/Observer';
 
 import { PostsService } from '../shared/posts.service';
 import { Post } from '../shared/interfaces';
-import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
-import {empty} from 'rxjs/internal/Observer';
+
 
 @Component({
   selector: 'app-home-page',
