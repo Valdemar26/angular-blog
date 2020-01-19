@@ -1,16 +1,15 @@
-<div
-  class="posts"
-  *ngIf="posts$ | async as posts; else loading">
+<div class="posts" *ngIf="posts; else loading">
 
   <div class="clock-wrapper" *ngIf="time$">
     <p>Current time: {{ time$  | async | date:'HH:mm:ss' }}</p>
   </div>
 
   <div class="search-wrapper">
-    <input #searchInput type="text" name="search" id="search"
-     (input)="onSearchChange(searchInput)"/>
+    <input #searchInput type="text" name="search" id="search"/>
 
-    <ul id="results"></ul>
+    <div class="results" *ngFor="let post of posts$ | async">
+      <span>{{ post.title }}</span>
+    </div>
   </div>
 
   <app-post
