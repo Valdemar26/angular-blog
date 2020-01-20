@@ -1,23 +1,26 @@
-<div class="posts" *ngIf="posts; else loading">
 
-  <div class="clock-wrapper" *ngIf="time$">
-    <p>Current time: {{ time$  | async | date:'HH:mm:ss' }}</p>
-  </div>
+<input #searchInput type="text" name="search" id="search"/>
 
-  <div class="search-wrapper">
-    <input #searchInput type="text" name="search" id="search"/>
 
+<div class="clock-wrapper" *ngIf="time$">
+  <p>Current time: {{ time$  | async | date:'HH:mm:ss' }}</p>
+</div>
+
+  <div class="search-wrapper" *ngIf="!makeSearch">
     <div class="results" *ngFor="let post of posts$ | async">
       <span>{{ post.title }}</span>
     </div>
   </div>
 
+<ng-container *ngIf="makeSearch">
+
+  <p *ngFor="let post of posts$ | async">{{ post.title }}</p>
+
   <app-post
     *ngFor="let post of posts"
     [post]="post">
   </app-post>
-
-</div>
+</ng-container>
 
 <ng-template #loading>
   <div class="loading-wrapper">

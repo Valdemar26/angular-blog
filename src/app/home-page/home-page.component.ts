@@ -19,6 +19,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   search$: Observable<any>;
   posts: Post[];
   private subscription = new Subscription();
+  h;
 
   @ViewChild('searchInput', { static: true }) search: ElementRef;
   makeSearch = false;
@@ -29,7 +30,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getCurrentTime();
-
     this.getAllPosts();
     this.getInputData();
   }
@@ -55,12 +55,13 @@ export class HomePageComponent implements OnInit, OnDestroy {
     return of(this.posts).pipe(
       tap(data => console.log('getFilteredPosts: ', data)),
       map((arrayOfPosts) => {
-        return arrayOfPosts.filter((item) => item.title.includes(currentInputValue));
+        return arrayOfPosts.filter((item) => item.title.toLowerCase().includes(currentInputValue.toLowerCase()));
       })
     );
   }
 
   getInputData() {
+    console.log(this.search.nativeElement);
     this.posts$ = fromEvent(this.search.nativeElement, 'keyup').pipe(
       tap( (res) => console.log('res: ', res)),
       skipWhile( (data) => !data),
@@ -72,7 +73,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.makeSearch = true;
         return this.getFilteredPosts(currentInputValue);
       }),
-      tap( (res) => console.log(res))
+      tap( (res) => {
+        this.h = res;
+        console.log(res);
+      })
     );
   }
 
