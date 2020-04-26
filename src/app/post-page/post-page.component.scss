@@ -6,6 +6,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      @media all and (max-width: 600px) {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        justify-content: center;
+      }
     }
 
     h1 {
@@ -13,6 +19,8 @@
     }
 
     .info {
+      max-width: 90%;
+      margin: 0 auto;
 
       strong {
         margin-right: 1rem;

@@ -6,7 +6,6 @@ import { debounceTime, distinctUntilChanged, filter, map, skipWhile, switchMap, 
 import { PostsService } from '../shared/posts.service';
 import { Post } from '../shared/interfaces';
 
-
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -19,7 +18,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
   search$: Observable<any>;
   posts: Post[];
   private subscription = new Subscription();
-  h;
 
   @ViewChild('searchInput', { static: true }) search: ElementRef;
   makeSearch = false;
@@ -45,10 +43,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
   getAllPosts() {
     this.postsService.getAllPosts().subscribe(data => {
       this.posts = data;
-      console.log('POSTS: ', this.posts);
+      this.posts$ = of(this.posts);
     });
-    this.search$ = of(this.posts);
-    console.log(this.search$);
+
+    // console.log(this.search$);
   }
 
   getFilteredPosts(currentInputValue): Observable<any> {
@@ -61,7 +59,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   getInputData() {
-    console.log(this.search.nativeElement);
+    console.log('getInputData: ', this.search.nativeElement);
     this.posts$ = fromEvent(this.search.nativeElement, 'keyup').pipe(
       tap( (res) => console.log('res: ', res)),
       skipWhile( (data) => !data),
@@ -74,8 +72,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
         return this.getFilteredPosts(currentInputValue);
       }),
       tap( (res) => {
-        this.h = res;
-        console.log(res);
+        console.log('result: ', res);
       })
     );
   }
