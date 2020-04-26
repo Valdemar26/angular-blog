@@ -18,6 +18,22 @@ import { environment } from '../environments/environment';
 
 registerLocaleData(uaLocale, 'ua');
 
+// 1. Import the libs you need
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
+// 2. Add your credentials from step 1
+const config = {
+  apiKey: '',
+  authDomain: '',
+  databaseURL: '',
+  projectId: '',
+  storageBucket: '',
+  messagingSenderId: ''
+};
+
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
   multi: true,
@@ -33,7 +49,11 @@ const INTERCEPTOR_PROVIDER: Provider = {
     PostComponent
   ],
   imports: [
-    BrowserModule,
+    AngularFireModule.initializeApp(config),
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireAuthModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     SharedModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
