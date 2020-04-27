@@ -15,7 +15,6 @@ import { Post } from '../shared/interfaces';
 })
 export class PostPageComponent implements OnInit, OnDestroy {
   post$: Observable<Post>;
-  id;
 
   private subscription: Subscription;
 
@@ -25,13 +24,14 @@ export class PostPageComponent implements OnInit, OnDestroy {
     private title: Title,
     private meta: Meta
   ) {
-    title.setTitle('Angular Blog | Ангулар блог українською');  // todo create dynamic adding title
-
     meta.addTags([
       { name: 'keywords', content: 'Ангулар, блог, українською, angular, blog, фреймворк, Angular 8, Angular 9'},
-      { name: 'description', content: '★Ангулар блог українською - тільки актуальні статті по фреймворку Angular, написані українською мовою★'}
+      { name: 'description',
+        content: '★Ангулар блог українською - тільки актуальні статті по фреймворку Angular, написані українською мовою★'
+      }
     ]);
 
+    this.subscription = new Subscription();
   }
 
   ngOnInit() {
@@ -41,23 +41,25 @@ export class PostPageComponent implements OnInit, OnDestroy {
   getPostById() {
     this.post$ = this.route.params
       .pipe( switchMap((params: Params) => {
-        if (params['id']) {
-          // this.getTitle(params['id']);
+        if (params[`id`]) {
+          this.getTitle(params[`id`]);
         }
-        return this.postsService.getPostById(params['id']);
+        return this.postsService.getPostById(params[`id`]);
       }));
   }
 
-  // getTitle(id) {
-  //   const titleStream$ = this.postsService.getPostById(id).subscribe( (post: Post) => {
-  //     this.title.setTitle(post.title);
-  //   });
-  //
-  //   this.subscription.add(titleStream$);
-  // }
+  getTitle(id) {
+    const titleStream$ = this.postsService.getPostById(id).subscribe( (post: Post) => {
+      this.title.setTitle(post.title);
+    });
+
+    this.subscription.add(titleStream$);
+  }
 
   ngOnDestroy(): void {
-    // this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }
