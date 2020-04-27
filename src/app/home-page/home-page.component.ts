@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { fromEvent, Observable, of, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, skipWhile, switchMap, tap } from 'rxjs/operators';
@@ -23,8 +24,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
   makeSearch = false;
 
   constructor(
-    private postsService: PostsService
-  ) { }
+    private postsService: PostsService,
+    private title: Title
+  ) {
+    title.setTitle('Angular Blog | Ангулар блог українською');
+  }
 
   ngOnInit() {
     this.getCurrentTime();
