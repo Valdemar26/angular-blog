@@ -35,7 +35,12 @@ export class PostPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.scrollToTop();
     this.getPostById();
+  }
+
+  scrollToTop() {
+    window.scrollTo(0 ,0);
   }
 
   getPostById() {
