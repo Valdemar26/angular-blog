@@ -55,3 +55,4 @@ package-lock.json
 .firebaserc
 .firebase
 firebase.json
+.firebase/
