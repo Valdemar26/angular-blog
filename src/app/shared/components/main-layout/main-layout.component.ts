@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, Renderer2, TemplateRef, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,15 +8,18 @@ import { Router } from '@angular/router';
 })
 export class MainLayoutComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  @ViewChild('progressBar', { static: true }) progressBar: ElementRef;
+  constructor(
+    private router: Router,
+    private renderer: Renderer2
+  ) { }
 
   @HostListener('window:scroll')
   onWindowScroll(): void {
-    // TODO rewrite on Renderer2 and Angular way
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const windowScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = (winScroll / height) * 100;
-    document.getElementById('progressBar').style.width = scrolled + '%';
+    const scrolled = (windowScroll / height) * 100;
+    this.renderer.setStyle(this.progressBar.nativeElement, 'width', `${scrolled}%`);
   }
 
   ngOnInit() {
