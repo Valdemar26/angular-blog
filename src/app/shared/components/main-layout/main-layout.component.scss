@@ -50,7 +50,22 @@
   .main {
     .typewriter {
       h1 {
-        font-size: 1rem;
+        font-size: 0.8rem;
+      }
+      h5 {
+        font-size: 10px;
+      }
+    }
+
+    .progress-wrapper {
+      top: 36px;
+
+      .progress-container {
+        height: 3px;
+
+        .progress-bar {
+          height: 3px;
+        }
       }
     }
   }
@@ -62,18 +77,17 @@
   top: 46px;
   z-index: 1;
   width: 100%;
-  background-color: #f1f1f1;
 }
 
 .progress-container {
   width: 100%;
   height: 8px;
-  background: #ccc;
+  background: #333;
 }
 
 /* The progress bar (scroll indicator) */
 .progress-bar {
   height: 8px;
-  background: #4caf50;
+  background: #ffa500;
   width: 0%;
 }
