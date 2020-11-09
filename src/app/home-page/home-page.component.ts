@@ -76,7 +76,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
         return this.getFilteredPosts(currentInputValue);
       }),
       tap( (res) => {
-        console.log('result: ', res);
+        this.posts = res;
+        console.log(res);
       })
     );
   }
