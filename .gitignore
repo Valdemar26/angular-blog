@@ -50,3 +50,9 @@ package-lock.json
 
 # environment
 #environments/
+
+# firebase
+.firebaserc
+.firebase
+firebase.json
+.firebase/

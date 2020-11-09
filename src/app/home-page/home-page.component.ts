@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { fromEvent, Observable, of, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, skipWhile, switchMap, tap } from 'rxjs/operators';
 
 import { PostsService } from '../shared/posts.service';
 import { Post } from '../shared/interfaces';
-
 
 @Component({
   selector: 'app-home-page',
@@ -24,8 +24,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
   makeSearch = false;
 
   constructor(
-    private postsService: PostsService
-  ) { }
+    private postsService: PostsService,
+    private title: Title
+  ) {
+    title.setTitle('Angular Blog | Ангулар блог українською');
+  }
 
   ngOnInit() {
     this.getCurrentTime();
@@ -44,10 +47,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
   getAllPosts() {
     this.postsService.getAllPosts().subscribe(data => {
       this.posts = data;
-      console.log('POSTS: ', this.posts);
+      this.posts$ = of(this.posts);
     });
-    this.search$ = of(this.posts);
-    console.log(this.search$);
+
+    // console.log(this.search$);
   }
 
   getFilteredPosts(currentInputValue): Observable<any> {
