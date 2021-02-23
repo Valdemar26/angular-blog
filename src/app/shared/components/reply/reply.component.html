@@ -1,0 +1,21 @@
+<form class="exp-comments-form"
+      [formGroup]="replyForm">
+
+  <input type="text" formControlName="username" placeholder="Username">
+  <textarea name="" formControlName="comment" placeholder="Leave a Comment..."></textarea>
+
+  <div class="exp-comments-buttons-wrapper">
+    <button class="button-cancel" mat-raised-button color="danger" mat-button (click)="cancel()">Cancel</button>
+
+    <button class="btn-comment"
+            type="button"
+            mat-raised-button color="primary" mat-button
+            [disabled]="replyForm.invalid"
+            (click)="confirmReply()">
+      Leave reply
+    </button>
+  </div>
+
+</form>
+
+<ng-container #toastContainer></ng-container>

@@ -1,47 +1,11 @@
+<ng-container *ngFor="let post of posts$ | async">
 
-<input #searchInput type="text" name="search" id="search"/>
+  <app-post [post]="post"></app-post>
 
-<p>{{ makeSearch }}</p>
-
-
-<div class="clock-wrapper" *ngIf="time$">
-  <p>Current time: {{ time$  | async | date:'HH:mm:ss' }}</p>
-</div>
-
-
-<div class="search-wrapper" *ngIf="!makeSearch">
-  <app-post
-    *ngFor="let post of posts"
-    [post]="post">
-  </app-post>
-</div>
-
-<ng-container *ngIf="makeSearch">
-  <app-post
-    *ngFor="let post of posts | async"
-    [post]="post">
-  </app-post>
 </ng-container>
 
-  </ng-container>
-
-  <ng-container *ngIf="!makeSearch">
-    <ng-container *ngFor="let post of posts$ | async">
-<!--      <ng-template *ngIf="post; else loading">-->
-<!--<h1>POST {{ !!post }}</h1>-->
-        <app-post
-          [post]="post">
-        </app-post>
-
-<!--      </ng-template>-->
-    </ng-container>
-  </ng-container>
-
-
-  <ng-template #loading>
-    <div class="loading-wrapper"></div>
-    <p class="text-center">Завантажую пости...</p>
-    <img class="loading" src="../../assets/loading.gif" alt="loading">
-  </ng-template>
+<div *ngIf="showLoader">
+  <div class="loading-wrapper"></div>
+  <p class="text-center">Завантажую пости...</p>
+  <img class="loading" src="../../assets/loading.gif" alt="loading">
 </div>
-

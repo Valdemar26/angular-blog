@@ -1,0 +1,36 @@
+.exp-comments-form {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 0 auto;
+
+  input, textarea {
+    width: 70%;
+    border-radius: 20px;
+    background-color: #F5F8F8;
+    height: 30px;
+    border: none;
+    padding: 0 15px;
+    color: #002A30;
+    font-family: Cairo, sans-serif;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 14px;
+    outline: none;
+  }
+
+  textarea {
+    margin: 20px 0;
+    padding: 15px;
+    height: 60px;
+  }
+
+  .exp-comments-buttons-wrapper {
+    display: flex;
+    margin-bottom: 20px;
+
+    .button-cancel {
+      margin-right: 20px;
+    }
+  }
+}

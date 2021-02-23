@@ -1,0 +1,97 @@
+@import './../../../../assets/scss/variables/variables';
+
+.exp-notification-toast {
+  z-index: 999;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: sans-serif;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 12px 0 rgba(17, 89, 98, 0.36);
+  width: auto;
+  position: absolute;
+  top: 200px;
+  left: 50%;
+  animation-duration: 0.8s;
+  animation-name: exp-notification-appear;
+
+  &.exp-notification-toast-destroy {
+    animation-duration: 0.8s;
+    animation-name: exp-notification-toast-destroy;
+    display: none;
+  }
+
+  // action classes
+  &.exp-notification-success {
+    background-color: #95C124;
+  }
+
+  &.exp-notification-warning {
+    background-color: darkorange;
+  }
+
+  &.exp-notification-error {
+    background-color: firebrick;
+  }
+
+  &.exp-notification-info {
+    background-color: silver;
+  }
+
+  .exp-notification-toast-close-button {
+    display: block;
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+  }
+
+
+  .exp-notification-toast-icon {
+    width: 25px;
+    margin-right: 20px;
+  }
+
+  .exp-notification-toast-container {
+    display: flex;
+    flex-direction: column;
+
+    .exp-notification-toast-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: $dark;
+    }
+
+    .exp-notification-toast-text {
+      font-size: 13px;
+      color: $dark-gray;
+    }
+  }
+}
+
+
+
+// Toast appear / disappear animation
+@keyframes exp-notification-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+    z-index: 1001;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes exp-notification-toast-destroy {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}

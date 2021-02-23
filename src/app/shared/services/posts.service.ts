@@ -4,8 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { from, Observable } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 
-import { FbCreateResponse, Post } from './interfaces';
-import { environment } from '../../environments/environment';
+import { FbCreateResponse, Post } from '../interfaces';
+import { environment } from '../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class PostsService {
