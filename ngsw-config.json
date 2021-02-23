@@ -12,9 +12,6 @@
           "/manifest.webmanifest",
           "/*.css",
           "/*.js"
-        ],
-        "urls": [
-          "https://fonts.googleapis.com/css?family=Roboto"
         ]
       }
     }, {
@@ -26,18 +23,6 @@
           "/assets/**",
           "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
         ]
-      }
-    }
-  ],
-  "dataGroups": [
-    {
-      "name": "firebase-posts",
-      "urls": [
-        "https://angular-blog-ua.firebaseio.com/**"
-      ],
-      "cacheConfig": {
-        "maxSize": 5,
-        "maxAge": "3600"
       }
     }
   ]

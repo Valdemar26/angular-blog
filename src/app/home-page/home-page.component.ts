@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { fromEvent, Observable, of, Subscription } from 'rxjs';
@@ -14,14 +14,13 @@ import { Post } from '../shared/interfaces';
 })
 export class HomePageComponent implements OnInit, OnDestroy {
 
+  public showLoader = false;
+
   posts$: Observable<any>;
   public time$: Observable<Date>;
   search$: Observable<any>;
   posts: Post[];
   private subscription = new Subscription();
-
-  @ViewChild('searchInput', { static: true }) search: ElementRef;
-  makeSearch = false;
 
   constructor(
     private postsService: PostsService,
@@ -31,59 +30,22 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getCurrentTime();
     this.getAllPosts();
-    this.getInputData();
-  }
-
-  getCurrentTime() {
-    this.time$ = new Observable( obs => {
-      setInterval(() => {
-        obs.next(new Date());
-      }, 1000);
-    });
   }
 
   getAllPosts() {
+    this.showLoader = true;
+
     this.postsService.getAllPosts().subscribe(data => {
+
       this.posts = data;
       this.posts$ = of(this.posts);
+
+      this.showLoader = false;
     });
-
-    // console.log(this.search$);
-  }
-
-  getFilteredPosts(currentInputValue): Observable<any> {
-    return of(this.posts).pipe(
-      tap(data => console.log('getFilteredPosts: ', data)),
-      map((arrayOfPosts) => {
-        return arrayOfPosts.filter((item) => item.title.toLowerCase().includes(currentInputValue.toLowerCase()));
-      })
-    );
-  }
-
-  getInputData() {
-    console.log('getInputData: ', this.search.nativeElement);
-    this.posts$ = fromEvent(this.search.nativeElement, 'keyup').pipe(
-      tap( (res) => console.log('res: ', res)),
-      skipWhile( (data) => !data),
-      filter( (val) => !!val ),
-      map( (event: any) => event.target.value ),
-      debounceTime(500),
-      distinctUntilChanged(),
-      switchMap( (currentInputValue) => {
-        this.makeSearch = true;
-        return this.getFilteredPosts(currentInputValue);
-      }),
-      tap( (res) => {
-        this.posts = res;
-        console.log(res);
-      })
-    );
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
 }
