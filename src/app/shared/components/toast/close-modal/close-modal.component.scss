@@ -1,0 +1,117 @@
+@import './../../../../../assets/scss/variables/variables';
+@import './../../../../../assets/scss/mixins/mixin-buttons';
+
+.exp-modal-wrapper {
+  position: absolute;
+  top: calc(50% - 200px);
+  left: calc(50% - 200px);
+  width: 400px;
+  height: 200px;
+  padding: 20px;
+  border-radius: 10px;
+  animation-duration: 0.8s;
+  animation-name: exp-modal-appear;
+
+  &.exp-modal-destroy {
+    animation-duration: 0.8s;
+    animation-name: exp-notification-toast-destroy;
+    display: none;
+  }
+
+  // action classes
+  &.exp-modal-success {
+    background-color: #95C124;
+  }
+
+  &.exp-modal-warning {
+    background-color: darkorange;
+  }
+
+  &.exp-modal-error {
+    background-color: #ec8f8f;
+    .exp-modal-container {
+      .exp-modal-title, .exp-modal-text {
+        color: #fff;
+      }
+    }
+  }
+
+  &.exp-modal-info {
+    background-color: silver;
+  }
+
+  .exp-modal-close-button {
+    display: block;
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+  }
+
+  .exp-modal-buttons-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .exp-success-button, .exp-cancel-button {
+      @include button-success();
+    }
+
+    .exp-cancel-button {
+      @include button-cancel();
+    }
+  }
+
+
+  .exp-modal-icon {
+    display: flex;
+    width: 25px;
+    margin: 0 auto 20px;
+  }
+
+  .exp-modal-container {
+    display: flex;
+    flex-direction: column;
+
+    .exp-modal-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: $dark;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .exp-modal-text {
+      font-size: 13px;
+      color: $dark-gray;
+      margin-bottom: 50px;
+    }
+  }
+}
+
+// Modal appear / disappear animation
+@keyframes exp-modal-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+    z-index: 1001;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes exp-modal-destroy {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}

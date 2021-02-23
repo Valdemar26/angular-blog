@@ -1,0 +1,26 @@
+<div class="exp-modal-wrapper {{ modalConfig.modalType }}" *ngIf="modalConfig">
+  <img class="exp-modal-icon" *ngIf="modalConfig.icon"
+       [src]="modalConfig.icon.src"
+       [alt]="modalConfig.icon.alt"/>
+
+
+  <div class="exp-modal-container">
+
+    <div class="exp-modal-title" *ngIf="modalConfig.title">
+      {{ modalConfig.title }}
+    </div>
+
+    <div class="exp-modal-text" *ngIf="modalConfig.text">
+      {{ modalConfig.text }}
+    </div>
+
+  </div>
+
+  <img class="exp-modal-close-button" src="./../../../../../assets/images/close.svg"
+       alt="close" (click)="close()">
+
+  <div class="exp-modal-buttons-wrapper">
+    <button class="exp-cancel-button" (click)="close()">{{ 'Cancel' | translate }}</button>
+    <button class="exp-success-button" (click)="acceptHide()">{{ 'Ok' | translate }}</button>
+  </div>
+</div>

@@ -5,7 +5,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { Observable, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-import { PostsService } from '../shared/posts.service';
+import { PostsService } from '../shared/services/posts.service';
 import { Post } from '../shared/interfaces';
 
 @Component({

@@ -1,0 +1,22 @@
+<div class="exp-notification-toast {{ notification.notificationType }}">
+
+  <img class="exp-notification-toast-icon" *ngIf="notification.icon"
+    [src]="notification.icon.src"
+    [alt]="notification.icon.alt"/>
+
+
+  <div class="exp-notification-toast-container">
+
+    <div class="exp-notification-toast-title" *ngIf="notification.title">
+      {{ notification.title }}
+    </div>
+
+    <div class="exp-notification-toast-text" *ngIf="notification.text">
+      {{ notification.text }}
+    </div>
+
+  </div>
+
+  <img class="exp-notification-toast-close-button" src="./../../../../assets/images/close.svg"
+       alt="close" (click)="close()">
+</div>

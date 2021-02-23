@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
-import { PostsService } from '../../shared/posts.service';
+import { PostsService } from '../../shared/services/posts.service';
 import { Post } from '../../shared/interfaces';
 import { AlertService } from '../shared/services/alert.service';
 

@@ -1,0 +1,87 @@
+<div class="exp-comments-wrapper">
+
+  <h3 *ngIf="commentsLength">Comments: ({{ commentsLength }})</h3>
+
+  <!-- TODO move in different component -->
+  <form class="exp-comments-form"
+        [formGroup]="commentsForm">
+
+    <input type="text" formControlName="username" placeholder="Username">
+    <textarea name="" formControlName="comment" placeholder="Leave a comment"></textarea>
+
+    <div class="exp-comments-buttons-wrapper">
+      <button class="button-cancel"
+              (click)="cancel()"
+              [disabled]="commentsForm.invalid">
+        Cancel
+      </button>
+
+      <button class="btn-comment"
+              type="button"
+              [disabled]="commentsForm.invalid"
+              (click)="confirm()">
+        Leave comment
+      </button>
+    </div>
+
+  </form>
+
+
+  <div *ngIf="getCommentsList | async as commentsList">
+    <div *ngFor="let comment of commentsList | commentsPipe:subjectId | reverse" class="exp-comment">
+
+      <div class="exp-comments">
+        <div class="exp-comment-avatar" *ngIf="comment.avatar">
+          <img [src]="comment.avatar" alt="avatar">
+        </div>
+
+        <div class="exp-comment-container">
+          <div class="exp-comment-user-wrapper">
+            <div class="exp-comment-name">{{ comment.username }}</div>
+
+            <div class="exp-comment-reply">
+              <button class="button-success" (click)="replyToComment(comment.commentId)">Reply</button>
+            </div>
+          </div>
+
+
+          <div class="exp-comment-date">{{ comment.commentId | date:'MMM d, y, h:mm:ss' }}</div>
+
+          <div class="exp-comment-content">
+            <p>{{ comment.comment }}</p>
+          </div>
+
+          <div class="exp-comment-vote">
+
+<!--            <span class="material-icons icon-up" title="+1">thumb_up</span>-->
+<!--            <span class="material-icons icon-down" title="-1">thumb_down</span>-->
+
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-reply-to-comment" *ngIf="comment.reply && comment.reply.length">
+
+        <div *ngFor="let reply of comment.reply | reverse" class="exp-single-reply">
+          <div *ngIf="reply.avatar" class="exp-reply-avatar">
+            <img [src]="reply.avatar" alt="avatar">
+          </div>
+
+          <div class="exp-reply-content">
+            <div class="exp-reply-name">{{ reply.username }}</div>
+
+            <div class="exp-reply-date">{{ reply.commentId | date:'MMM d, y, h:mm:ss' }}</div>
+
+            <div class="exp-reply-comment">
+              <p>{{ reply.comment }}</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<ng-container #replyContainer></ng-container>
