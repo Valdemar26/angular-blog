@@ -22,22 +22,12 @@ export class LoginPageComponent implements OnInit {
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit() {
-    this.route.queryParams.subscribe((params: Params) => {
-      if (params['loginAgain']) {
-        this.message = 'Будь-ласка, введіть дані!';
-      } else if (params['authFailed']) {
-        this.message = 'Сесія завершилась. Введіть дані ще раз!';
-      }
-    });
-
-    this.form = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(6)])
-    });
+  public ngOnInit(): void {
+    this.getRouteParams();
+    this.initForm();
   }
 
-  submitForm() {
+  public submitForm(): void {
     if (this.form.invalid) {
       return;
     }
@@ -56,7 +46,26 @@ export class LoginPageComponent implements OnInit {
     }, () => {
       this.submitted = false;
     });
-
   }
 
+  public back(): void {
+    this.router.navigate(['']);
+  }
+
+  private getRouteParams(): void {
+    this.route.queryParams.subscribe((params: Params) => {
+      if (params.loginAgain) {
+        this.message = 'Будь-ласка, введіть дані!';
+      } else if (params.authFailed) {
+        this.message = 'Сесія завершилась. Введіть дані ще раз!';
+      }
+    });
+  }
+
+  private initForm(): void {
+    this.form = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [Validators.required, Validators.minLength(6)])
+    });
+  }
 }

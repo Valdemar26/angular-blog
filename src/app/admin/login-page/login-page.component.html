@@ -40,9 +40,14 @@
     </div>
   </div>
 
-  <button
-    type="submit"
-    class="btn btn-primary"
-    [disabled]="form.invalid || submitted">Увійти</button>
+  <div class="btn-wrapper">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="form.invalid || submitted">Увійти</button>
+
+    <button class="btn btn-success" (click)="back()">На головну</button>
+  </div>
+
 
 </form>
