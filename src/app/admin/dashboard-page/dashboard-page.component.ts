@@ -1,5 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
 import { Subscription } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 import { PostsService } from '../../shared/services/posts.service';
 import { Post } from '../../shared/interfaces';
@@ -18,28 +20,31 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   constructor(private postsService: PostsService, private alert: AlertService) { }
 
-  ngOnInit() {
-    this.postsSubscription = this.postsService.getAllPosts().subscribe( posts => {
-      this.posts = posts;
+  public ngOnInit(): void {
+    this.postsSubscription = this.postsService.getAllPosts().pipe(
+      delay(800)
+    ).subscribe( posts => {
+      this.posts = posts.reverse();
     });
   }
 
-  ngOnDestroy() {
+  public removePost(id: string) {
+    this.deleteSubscription = this.postsService.removePost(id)
+      .subscribe(() => {
+      this.posts = this.posts.filter( (post) => {
+        this.alert.danger('Пост було видалено!');
+        return post.id !== id;
+      });
+    });
+  }
+
+  public ngOnDestroy(): void {
     if (this.postsSubscription) {
       this.postsSubscription.unsubscribe();
     }
     if (this.deleteSubscription) {
       this.deleteSubscription.unsubscribe();
     }
-  }
-
-  remove(id: string) {
-    this.deleteSubscription = this.postsService.removePost(id).subscribe(() => {
-      this.posts = this.posts.filter( (post) => {
-        this.alert.danger('Пост було видалено!');
-        return post.id !== id;
-      });
-    });
   }
 
 }

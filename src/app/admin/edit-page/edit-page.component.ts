@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { switchMap } from 'rxjs/operators';
+import {delay, switchMap} from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
 import { PostsService } from '../../shared/services/posts.service';
@@ -27,6 +27,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.params.pipe(
+      delay(500),
       switchMap((params: Params) => {
         return this.postsService.getPostById(params['id']);
       })
