@@ -1,8 +1,21 @@
-<ng-container *ngFor="let post of posts$ | async">
+<div class="home-page-wrapper">
+  <ng-container *ngFor="let post of posts$ | async; let i = index" >
 
-  <app-post [post]="post"></app-post>
+    <div class="box">
 
-</ng-container>
+      <img *ngIf="pictures[i]; else default_picture" src="{{ pictures[i] }}" alt="blog_image">
+
+      <ng-template #default_picture>
+        <img src="https://source.unsplash.com/collection/190727/1600x900" alt="random-blog-picture">
+      </ng-template>
+
+      <app-post [post]="post"></app-post>
+    </div>
+
+  </ng-container>
+</div>
+
+
 
 <div *ngIf="showLoader">
   <div class="loading-wrapper"></div>
