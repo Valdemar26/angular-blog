@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable, of, Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import {delay, map, tap} from 'rxjs/operators';
 
 import { PostsService } from '../shared/services/posts.service';
 import { Post } from '../shared/interfaces';
@@ -52,7 +52,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
   public getAllPosts(): void {
     this.showLoader = true;
 
-    this.postsService.getAllPosts().subscribe(data => {
+    this.postsService.getAllPosts().pipe(
+      delay(800)
+    ).subscribe(data => {
 
       this.posts = data.reverse();
       console.log(this.posts);
