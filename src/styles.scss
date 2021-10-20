@@ -46,7 +46,7 @@ img {
 }
 
 .container {
-  max-width: 90%;
+  max-width: 1032px;
   margin: auto;
   overflow: hidden;
   padding: 0 2rem;
@@ -80,12 +80,24 @@ img {
 .card {
   padding: 1rem;
   border: #ccc 1px dotted;
-  margin: 0.7rem 0;
+  margin: 0 0 0.7rem;
 
   &-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    height: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    word-wrap: break-word;
+
+    h2 {
+      flex: 80%;
+    }
+    small {
+      flex: 20%;
+    }
   }
 
   &-content {
@@ -125,10 +137,14 @@ img {
   padding: 2px 5px;
   max-width: 100px;
   margin: 0 auto;
+  border: 1px solid #fff;
+  transition: 0.3s ease-in;
 
   &:hover {
     border: 1px solid #111;
     border-radius: 5px;
+    background: #333;
+    color: #fff;
   }
 }
 

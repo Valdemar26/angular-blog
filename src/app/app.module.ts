@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Provider } from '@angular/core';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import uaLocale from '@angular/common/locales/uk';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -56,6 +56,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     SharedModule,
+    HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [INTERCEPTOR_PROVIDER, AlertService],

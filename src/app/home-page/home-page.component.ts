@@ -1,11 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
 
-import { fromEvent, Observable, of, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, skipWhile, switchMap, tap } from 'rxjs/operators';
+import { Observable, of, Subscription } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 import { PostsService } from '../shared/services/posts.service';
 import { Post } from '../shared/interfaces';
+import { environment } from '../../environments/environment';
+
 
 @Component({
   selector: 'app-home-page',
@@ -15,6 +18,7 @@ import { Post } from '../shared/interfaces';
 export class HomePageComponent implements OnInit, OnDestroy {
 
   public showLoader = false;
+  public pictures = [];
 
   posts$: Observable<any>;
   public time$: Observable<Date>;
@@ -24,28 +28,41 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   constructor(
     private postsService: PostsService,
-    private title: Title
+    private title: Title,
+    private http: HttpClient
   ) {
     title.setTitle('Angular Blog | Ангулар блог українською');
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.getAllPosts();
+    this.getRandomPics();
   }
 
-  getAllPosts() {
+  public getRandomPics(): void {
+    const picturesSubscription = this.http.get(`https://api.unsplash.com/photos/?client_id=${environment.unsplashApi}`).pipe(
+      tap((data) => console.log('pictures1: ', data)),
+      map((pic: any) => pic.map((p) => p.urls.full)),
+      tap((data) => console.log('pictures2: ', data))
+    ).subscribe(pictures => this.pictures = pictures);
+
+    this.subscription.add(picturesSubscription);
+  }
+
+  public getAllPosts(): void {
     this.showLoader = true;
 
     this.postsService.getAllPosts().subscribe(data => {
 
-      this.posts = data;
+      this.posts = data.reverse();
+      console.log(this.posts);
       this.posts$ = of(this.posts);
 
       this.showLoader = false;
     });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 }
