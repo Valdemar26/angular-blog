@@ -337,8 +337,7 @@ app-edit-page {
   }
 }
 
-app-home-page,
-app-post-page {
+app-home-page {
   .loader-container {
     position: absolute;
     top: 50%;
@@ -357,6 +356,7 @@ app-post-page {
   }
 }
 
+// TODO fix rows below (make one code for all)
 app-dashboard-page {
   .dashboard-container {
     position: absolute;
@@ -374,6 +374,21 @@ app-dashboard-page {
 
 app-edit-page {
   .edit-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  img.loading {
+    display: inline-block;
+    width: 125px;
+    height: 125px;
+  }
+}
+
+app-post-page {
+  .post-container {
     position: absolute;
     top: 50%;
     left: 50%;

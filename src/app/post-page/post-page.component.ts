@@ -45,7 +45,9 @@ export class PostPageComponent implements OnInit, OnDestroy {
 
   getPostById() {
     this.post$ = this.route.params
-      .pipe( switchMap((params: Params) => {
+      .pipe(
+        delay(500),
+        switchMap((params: Params) => {
         if (params[`id`]) {
           this.getTitle(params[`id`]);
         }
